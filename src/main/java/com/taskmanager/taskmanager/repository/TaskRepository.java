@@ -5,8 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+
 
 import com.taskmanager.taskmanager.model.Task;
 import com.taskmanager.taskmanager.enums.Priority;
@@ -26,21 +25,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
             LocalDate date,
             TaskStatus status
     );
-   @Query("""
-    SELECT t FROM Task t
-    WHERE t.user.id = :userId
-    AND t.status <> :status
-    ORDER BY
-        CASE
-            WHEN t.priority = com.taskmanager.taskmanager.enums.Priority.HIGH THEN 1
-            WHEN t.priority = com.taskmanager.taskmanager.enums.Priority.MEDIUM THEN 2
-            WHEN t.priority = com.taskmanager.taskmanager.enums.Priority.LOW THEN 3
-        END ASC,
-        t.dueDate Asc
-""")
-List<Task> findActiveTasks(
-        @Param("userId") Long userId,
-        @Param("status") TaskStatus status
+   
+List<Task> findByUser_IdAndStatusNot(
+        Long userId,
+        TaskStatus status
 );
 List<Task> findByUser_IdAndStatusNotAndPriorityOrderByDueDateAsc(
         Long userId,

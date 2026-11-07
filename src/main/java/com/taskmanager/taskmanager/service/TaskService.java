@@ -1,7 +1,8 @@
 package com.taskmanager.taskmanager.service;
 
 
-
+import com.taskmanager.taskmanager.strategy.PrioritySortingStrategy;
+import com.taskmanager.taskmanager.strategy.DueDateSortingStrategy;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,14 +14,22 @@ import com.taskmanager.taskmanager.model.Task;
 import com.taskmanager.taskmanager.model.User;
 import com.taskmanager.taskmanager.repository.TaskRepository;
 
+
 @Service
 public class TaskService {
-
+private final PrioritySortingStrategy prioritySortingStrategy;
+private final DueDateSortingStrategy dueDateSortingStrategy;
     private final TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+  public TaskService(
+        TaskRepository taskRepository,
+        PrioritySortingStrategy prioritySortingStrategy,
+        DueDateSortingStrategy dueDateSortingStrategy) {
+
+    this.taskRepository = taskRepository;
+    this.prioritySortingStrategy = prioritySortingStrategy;
+    this.dueDateSortingStrategy = dueDateSortingStrategy;
+}
 
     public long countTotalTasks(Long userId) {
         return taskRepository.countByUser_Id(userId);
@@ -59,8 +68,22 @@ public Task createTask(Task task, User user) {
     return taskRepository.save(task);
 }
  public List<Task> getActiveTasks(Long userId) {
-    return taskRepository.findActiveTasks(userId, TaskStatus.DONE);
-}
+
+        List<Task> tasks =
+                taskRepository.findByUser_IdAndStatusNot(
+                        userId,
+                        TaskStatus.DONE
+                );
+
+        return tasks.stream()
+                .sorted(
+                        prioritySortingStrategy.getComparator()
+                                .thenComparing(
+                                        dueDateSortingStrategy.getComparator()
+                                )
+                )
+                .toList();
+    }
 public void changeTaskStatus(Long taskId, Long userId, TaskStatus status) {
 
     Task task = taskRepository.findById(taskId)
