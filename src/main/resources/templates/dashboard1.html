@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager - Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <header class="dashboard-header">
+        <h1>My Dashboard</h1>
+        <nav>
+            <a th:href="@{/profile}">My Profile</a>
+            <a th:href="@{/tasks}">View Tasks</a>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+
+        <div class="stats-grid">
+
+            <div class="stat-card total">
+                <h3>Total Tasks</h3>
+                <p th:text="${totalTasks}">0</p>
+            </div>
+
+            <div class="stat-card completed">
+                <h3>Completed Tasks</h3>
+                <p th:text="${completedTasks}">0</p>
+            </div>
+
+            <div class="stat-card progress">
+                <h3>In Progress</h3>
+                <p th:text="${inProgressTasks}">0</p>
+            </div>
+
+            <div class="stat-card todo">
+                <h3>To Do</h3>
+                <p th:text="${todoTasks}">0</p>
+            </div>
+
+            <div class="stat-card overdue">
+                <h3>Overdue Tasks</h3>
+                <p th:text="${overdueTasks}">0</p>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

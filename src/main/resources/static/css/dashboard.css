@@ -1,0 +1,140 @@
+
+/* ===== Dashboard ===== */
+
+* {
+    box-sizing: border-box;
+}
+
+body.dashboard-page {
+    margin: 0;
+    min-height: 100vh;
+    padding: 45px 60px;
+    background: #F7F6FA;
+    font-family: "Segoe UI", sans-serif;
+    color: #30283B;
+}
+
+/* Header */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 55px;
+}
+
+.dashboard-header h1 {
+    color: #55436F;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.dashboard-header nav {
+    display: flex;
+    gap: 25px;
+}
+
+.dashboard-header a {
+    color: #8871AD;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.dashboard-header a:hover {
+    color: #55436F;
+}
+
+/* Statistics */
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* Cards */
+
+.stat-card {
+    background: white;
+    padding: 30px;
+    border: 1px solid #E8E1F0;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(85, 67, 111, 0.05);
+    transition: 0.25s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(85, 67, 111, 0.10);
+}
+
+.stat-card h3 {
+    margin: 0 0 20px;
+    color: #777080;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.stat-card p {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 700;
+    color: #55436F;
+}
+
+/* Card Variations */
+
+.stat-card.total {
+    border-top: 4px solid #8871AD;
+}
+
+.stat-card.completed {
+    border-top: 4px solid #65A98A;
+}
+
+.stat-card.progress {
+    border-top: 4px solid #729BD0;
+}
+
+.stat-card.todo {
+    border-top: 4px solid #D4A65E;
+}
+
+.stat-card.overdue {
+    border-top: 4px solid #D77E86;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+    body.dashboard-page {
+        padding: 30px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    body.dashboard-page {
+        padding: 20px;
+    }
+
+    .dashboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

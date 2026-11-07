@@ -1,0 +1,118 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body.edit-task-page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #F7F6FA, #EDE7F5);
+    font-family: "Segoe UI", sans-serif;
+    color: #30283B;
+}
+
+.form-title {
+    color: #55436F;
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+.task-form {
+    width: 100%;
+    max-width: 500px;
+    padding: 35px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(85, 67, 111, 0.10);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #55436F;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #E4DDED;
+    border-radius: 9px;
+    background: #FCFBFD;
+    color: #30283B;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #8871AD;
+    box-shadow: 0 0 0 3px rgba(136, 113, 173, 0.12);
+}
+
+.save-task-btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 9px;
+    background: #55436F;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.save-task-btn:hover {
+    background: #8871AD;
+    transform: translateY(-2px);
+}
+
+.cancel-link {
+    margin-top: 20px;
+    color: #8871AD;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.cancel-link:hover {
+    color: #55436F;
+    text-decoration: underline;
+}
+
+@media (max-width: 550px) {
+    body.edit-task-page {
+        padding: 30px 15px;
+    }
+
+    .task-form {
+        padding: 25px 20px;
+    }
+
+    .form-title {
+        font-size: 25px;
+    }
+}

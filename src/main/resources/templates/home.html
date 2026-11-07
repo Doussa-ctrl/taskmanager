@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+
+<body class="home-page">
+
+    <header class="home-header">
+        <div class="logo">TaskFlow<span>.</span></div>
+    </header>
+
+    <main class="home-container">
+
+        <div class="home-card">
+
+            <div class="home-icon">✦</div>
+
+            <p class="home-subtitle">YOUR PERSONAL WORKSPACE</p>
+
+            <h1>Organize your day.<br>
+                Simplify your life.</h1>
+
+            <p class="home-description">
+                Stay focused, manage your tasks,
+                and make every day more productive.
+            </p>
+
+            <div th:if="${user == null}">
+                <a class="google-login"
+                   th:href="@{/oauth2/authorization/google}">
+                    <span>G</span>
+                    Sign in with Google
+                </a>
+            </div>
+
+        </div>
+
+        <footer class="home-footer">
+            Made for better days.
+        </footer>
+
+    </main>
+
+</body>
+</html>

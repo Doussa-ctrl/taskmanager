@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+
+<body class="profile-page">
+
+    <main class="profile-container">
+
+        <h1 class="profile-title">My Profile</h1>
+
+        <div class="profile-image">
+            <img th:if="${user.picture != null}"
+                 th:src="${user.picture}"
+                 alt="Profile Picture"
+                 width="100"
+                 height="100">
+        </div>
+
+        <p class="profile-info">
+            Name:
+            <span th:text="${user.name}"></span>
+        </p>
+
+        <p class="profile-info">
+            Email:
+            <span th:text="${user.email}"></span>
+        </p>
+
+        <p class="profile-info">
+            Provider:
+            <span th:text="${user.provider}"></span>
+        </p>
+
+        <form class="logout-form" th:action="@{/logout}" method="post">
+            <button class="logout-btn" type="submit">Logout</button>
+        </form>
+
+        <a class="back-link" th:href="@{/}">Back to Dashboard</a>
+
+    </main>
+
+</body>
+</html>

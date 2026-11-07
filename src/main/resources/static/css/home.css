@@ -1,0 +1,160 @@
+
+/* =========================
+   HOME PAGE
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body.home-page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #F7F6FA, #EDE7F5);
+    color: #30283B;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* Header */
+
+.home-header {
+    padding: 30px 60px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 700;
+    color: #55436F;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: #A18BC5;
+}
+
+/* Main Container */
+
+.home-container {
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Main Card */
+
+.home-card {
+    width: 560px;
+    max-width: 100%;
+    padding: 55px 45px;
+    background: #FFFFFF;
+    border: 1px solid #E8E1F0;
+    border-radius: 22px;
+    box-shadow: 0 15px 45px rgba(85, 67, 111, 0.10);
+}
+
+/* Icon */
+
+.home-icon {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: #EDE7F5;
+    color: #8871AD;
+    font-size: 27px;
+}
+
+/* Text */
+
+.home-subtitle {
+    color: #8871AD;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.home-card h1 {
+    margin: 22px 0;
+    color: #55436F;
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.home-description {
+    max-width: 390px;
+    margin: 0 auto 32px;
+    color: #777080;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* Google Login */
+
+.google-login {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background: #8871AD;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.google-login:hover {
+    background: #715B96;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.google-login span {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* Footer */
+
+.home-footer {
+    margin-top: 35px;
+    color: #9990A5;
+    font-size: 13px;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+
+    .home-header {
+        padding: 25px;
+    }
+
+    .home-container {
+        min-height: 75vh;
+        padding: 20px;
+    }
+
+    .home-card {
+        padding: 40px 25px;
+    }
+
+    .home-card h1 {
+        font-size: 30px;
+    }
+
+    .home-subtitle {
+        letter-spacing: 2px;
+    }
+}
