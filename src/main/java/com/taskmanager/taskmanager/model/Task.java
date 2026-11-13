@@ -3,6 +3,8 @@ package com.taskmanager.taskmanager.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -98,5 +100,19 @@ public User getUser() {
 
 public void setUser(User user) {
     this.user = user;
+}
+@OneToMany(
+    mappedBy = "task",
+    cascade = CascadeType.REMOVE,
+    orphanRemoval = true
+)
+private List<Notification> notifications = new ArrayList<>();
+
+public List<Notification> getNotifications() {
+    return notifications;
+}
+
+public void setNotifications(List<Notification> notifications) {
+    this.notifications = notifications;
 }
 }

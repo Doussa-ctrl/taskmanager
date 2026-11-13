@@ -12,7 +12,10 @@ import org.springframework.stereotype.Component;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import com.taskmanager.taskmanager.service.AdminService;
 import com.taskmanager.taskmanager.service.UserService;
+import com.taskmanager.taskmanager.model.Admin;
 import com.taskmanager.taskmanager.model.User;
 
 @Component
@@ -20,9 +23,10 @@ public class OAuth2LoginSuccessHandler
         implements AuthenticationSuccessHandler {
 
     private final UserService userService;
-
-    public OAuth2LoginSuccessHandler(UserService userService) {
+private final AdminService adminService;
+    public OAuth2LoginSuccessHandler(UserService userService,AdminService adminService) {
         this.userService = userService;
+       this.adminService =adminService;
     }
 
     @Override
@@ -43,12 +47,24 @@ public class OAuth2LoginSuccessHandler
         String picture = (String) attributes.get("picture");
 
 
-        User user = userService.findOrCreateUser(
-                name, email, picture);
+       var adminOptional = adminService.findByEmail(email);
 
-        request.getSession().setAttribute("loggedUser", user);
+        if (adminOptional.isPresent()) {
 
-        response.sendRedirect("/");
+            Admin admin = adminOptional.get();
+
+            request.getSession().setAttribute(
+                    "loggedAdmin", admin);
+
+            response.sendRedirect("/admin/dashboard");
+} else {
+    User user = userService.findOrCreateUser(
+        name, email, picture
+    );
+
+    request.getSession().setAttribute("loggedUser", user);
+    response.sendRedirect("/");
+}
     }
 }
 

@@ -2,6 +2,7 @@
 package com.taskmanager.taskmanager.repository;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,16 +26,16 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
             LocalDate date,
             TaskStatus status
     );
-   
-List<Task> findByUser_IdAndStatusNot(
+   List<Task> findByUser_Id(Long userId);
+
+List<Task> findByUser_IdAndPriorityOrderByDueDateAsc(
         Long userId,
-        TaskStatus status
-);
-List<Task> findByUser_IdAndStatusNotAndPriorityOrderByDueDateAsc(
-        Long userId,
-        TaskStatus status,
         Priority priority
 );
+  List<Task> findByStatusInAndDueDateLessThanEqual(
+        Collection<TaskStatus> statuses,
+        LocalDate dueDate
+    );
 }
 
 

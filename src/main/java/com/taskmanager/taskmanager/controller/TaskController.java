@@ -68,7 +68,7 @@ public class TaskController {
 
         model.addAttribute(
                 "tasks",
-                taskService.getActiveTasks(user.getId())
+                taskService.getTasks(user.getId())
         );
 
         return "my-tasks";

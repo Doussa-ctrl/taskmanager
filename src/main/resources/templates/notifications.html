@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow - Notifications</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6fa;
+            color: #263445;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 25px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header p {
+            color: #7b8794;
+            margin-top: 8px;
+        }
+
+        .unread-counter {
+            background: #e8efff;
+            color: #3568d4;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .notification-card {
+            background: white;
+            padding: 22px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+            border-left: 4px solid #dce2eb;
+        }
+
+        .notification-card.unread {
+            border-left-color: #3b82f6;
+            background: #ffffff;
+        }
+
+        .notification-card.read {
+            opacity: 0.75;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-content h3 {
+            margin: 0 0 10px;
+            font-size: 17px;
+        }
+
+        .notification-content p {
+            color: #667085;
+            margin: 0 0 12px;
+            line-height: 1.5;
+        }
+
+        .notification-date {
+            font-size: 12px;
+            color: #98a2b3;
+        }
+
+        .type {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            margin-bottom: 10px;
+        }
+
+        .status {
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .unread-status {
+            color: #2563eb;
+        }
+
+        .read-status {
+            color: #16a34a;
+        }
+
+        .read-btn {
+            background: #3568d4;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .read-btn:hover {
+            background: #2454b5;
+        }
+.delete-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.delete-btn:hover {
+    background: #b02a37;
+}
+
+.notification-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+        .empty-state {
+            background: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 12px;
+            color: #7b8794;
+        }
+
+        .empty-state h3 {
+            color: #263445;
+        }
+.notification-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.notification-tabs a {
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: white;
+    color: #667085;
+    font-weight: bold;
+}
+
+.notification-tabs a.active {
+    background: #3568d4;
+    color: white;
+}
+.back-link {
+    display: inline-block;
+    margin-top: 25px;
+    color: #8871AD;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.back-link:hover {
+    color: #55436F;
+}
+        @media(max-width: 600px) {
+            .header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .notification-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+
+        <div>
+            <h1>Notifications</h1>
+            <p>Stay updated with your tasks.</p>
+        </div>
+
+        <div class="unread-counter">
+            Unread:
+            <span th:text="${unreadCount}">0</span>
+        </div>
+
+    </div>
+
+<!-- Notification filters -->
+<div class="notification-tabs">
+
+    <a th:href="@{/notifications}"
+       th:classappend="${currentView == 'all'} ? ' active' : ''">
+        All
+    </a>
+
+    <a th:href="@{/notifications/unread}"
+       th:classappend="${currentView == 'unread'} ? ' active' : ''">
+        Unread
+    </a>
+
+</div>
+    <!-- Empty state -->
+    <div class="empty-state"
+         th:if="${#lists.isEmpty(notifications)}">
+
+        <h3>No notifications yet</h3>
+
+        <p>
+            You will receive notifications
+            about your upcoming tasks here.
+        </p>
+
+    </div>
+
+
+    <!-- Notifications list -->
+    <div th:each="notification : ${notifications}">
+
+        <div class="notification-card"
+             th:classappend="${notification.read} ? ' read' : ' unread'">
+
+            <div class="notification-content">
+
+                <span class="type"
+                      th:text="${notification.type}">
+                    TASK_DUE_TODAY
+                </span>
+
+                <h3 th:text="${notification.title}">
+                    Task Due Today
+                </h3>
+
+                <p th:text="${notification.message}">
+                    Your task is due today.
+                </p>
+
+                <div class="notification-date">
+
+                    <span th:text="${notification.createdAt}">
+                        Date
+                    </span>
+
+                </div>
+
+                <div th:if="${notification.read}"
+                     class="status read-status">
+
+                    Read
+
+                </div>
+
+                <div th:unless="${notification.read}"
+                     class="status unread-status">
+
+                    Unread
+
+                </div>
+
+            </div>
+
+
+            <!-- Mark as read button -->
+           <!-- Notification actions -->
+<div class="notification-actions">
+
+    <!-- Mark as read -->
+    <form th:if="${!notification.read}"
+          th:action="@{/notifications/{id}/read(id=${notification.id})}"
+          method="post">
+
+        <input type="hidden"
+               th:if="${_csrf != null}"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"/>
+
+        <button type="submit" class="read-btn">
+            Mark as read
+        </button>
+
+    </form>
+
+
+    <!-- Delete notification -->
+    <form th:action="@{/notifications/{id}/delete(id=${notification.id})}"
+          method="post"
+          onsubmit="return confirm('Are you sure you want to delete this notification?');">
+
+        <input type="hidden"
+               th:if="${_csrf != null}"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"/>
+
+        <button type="submit" class="delete-btn">
+            Delete
+        </button>
+
+    </form>
+
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+ <a class="back-link" th:href="@{/}">Back to Dashboard</a>
+</body>
+</html>

@@ -4,8 +4,10 @@ package com.taskmanager.taskmanager.service;
 
 import java.util.Optional;
 
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.stereotype.Service;
 
+import com.taskmanager.taskmanager.enums.AccountStatus;
 import com.taskmanager.taskmanager.model.User;
 import com.taskmanager.taskmanager.repository.UserRepository;
 
@@ -26,22 +28,36 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findOrCreateUser(String name, String email, String picture) {
+    public User findOrCreateUser(
+        String name,
+        String email,
+        String picture) {
 
-        Optional<User> existingUser = userRepository.findByEmail(email);
+    Optional<User> existing =
+            userRepository.findByEmail(email);
 
-        if (existingUser.isPresent()) {
-            return existingUser.get();
+    if (existing.isPresent()) {
+
+        User user = existing.get();
+
+        if (user.getAccountStatus() == AccountStatus.INACTIVE) {
+            throw new DisabledException(
+                "Your account has been deactivated by admin."
+            );
         }
 
-        User newUser = new User();
-
-        newUser.setName(name);
-        newUser.setEmail(email);
-        newUser.setPicture(picture);
-        newUser.setProvider("GOOGLE");
-
-        return userRepository.save(newUser);
+        return user;
     }
+
+    User newUser = new User();
+
+    newUser.setName(name);
+    newUser.setEmail(email);
+    newUser.setPicture(picture);
+    newUser.setProvider("GOOGLE");
+
+    return userRepository.save(newUser);
+}
+    
 }
 

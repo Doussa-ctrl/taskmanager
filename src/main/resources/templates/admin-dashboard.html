@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TaskFlow - Admin Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6fa;
+            color: #263445;
+        }
+
+        .sidebar {
+            width: 230px;
+            height: 100vh;
+            background: #17243a;
+            color: white;
+            position: fixed;
+            padding: 25px 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 40px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 14px 10px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+
+        .sidebar a:hover {
+            background: #30425d;
+            color: white;
+        }
+
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+            margin-top: 35px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            font-size: 34px;
+            margin-bottom: 5px;
+        }
+
+        .card p {
+            color: #718096;
+        }
+
+        .total {
+            border-left: 5px solid #3985dc;
+        }
+
+        .active {
+            border-left: 5px solid #16a36a;
+        }
+
+        .inactive {
+            border-left: 5px solid #d65a5a;
+        }
+
+        .logout {
+            margin-top: 40px;
+        }
+       
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>TaskFlow</h2>
+
+    <a th:href="@{/admin/dashboard}">
+        Dashboard
+    </a>
+
+    <a th:href="@{/admin/users}">users</a>
+
+   
+  <a href="/admin/profile">
+        profile
+    </a>
+</div>
+
+<div class="main">
+
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+        <span>Administrator</span>
+    </div>
+
+    <p>Welcome to your administration panel.</p>
+
+    <div class="cards">
+
+        <div class="card total">
+            <h3>Total Users</h3>
+            <h2 th:text="${totalUsers}">0</h2>
+            <p>All registered users</p>
+        </div>
+
+        <div class="card active">
+            <h3>Active Accounts</h3>
+            <h2 th:text="${activeUsers}">0</h2>
+            <p>Currently active accounts</p>
+        </div>
+
+        <div class="card inactive">
+            <h3>Disabled Accounts</h3>
+            <h2 th:text="${inactiveUsers}">0</h2>
+            <p>Currently disabled accounts</p>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

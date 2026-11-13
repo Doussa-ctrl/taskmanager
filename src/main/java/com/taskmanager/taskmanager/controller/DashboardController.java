@@ -20,7 +20,7 @@ public class DashboardController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/dashboard")
+    @GetMapping("/user/dashboard")
     public String dashboard(HttpSession session, Model model) {
 
         User user = (User) session.getAttribute("loggedUser");
@@ -46,6 +46,6 @@ public class DashboardController {
         model.addAttribute("overdueTasks",
                 taskService.countOverdueTasks(userId));
 
-        return "dashboard1";
+        return "dashboard_user";
     }
 }

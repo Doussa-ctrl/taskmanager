@@ -2,8 +2,12 @@ package com.taskmanager.taskmanager.model;
 
     
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.taskmanager.taskmanager.enums.AccountStatus;
+
 
 import jakarta.persistence.*;
 
@@ -67,7 +71,11 @@ public class User {
     public User() {
     }
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(
+    mappedBy = "user",
+    cascade = CascadeType.REMOVE,
+    orphanRemoval = true
+)
 private List<Task> tasks = new ArrayList<>();
 
 public List<Task> getTasks() {
@@ -76,5 +84,31 @@ public List<Task> getTasks() {
 
 public void setTasks(List<Task> tasks) {
     this.tasks = tasks;
+}
+@Enumerated(EnumType.STRING)
+@Column(nullable = false)
+private AccountStatus accountStatus;
+
+public AccountStatus getAccountStatus() {
+    return accountStatus;
+}
+
+public void setAccountStatus(AccountStatus accountStatus) {
+    this.accountStatus = accountStatus;
+}
+@Column(name = "created_at")
+private LocalDateTime createdAt;
+public LocalDateTime getCreatedAt() {
+    return createdAt;
+}
+
+public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+}
+@PrePersist
+public void onCreate() {
+    if (createdAt == null) {
+        createdAt = LocalDateTime.now();
+    }
 }
 }

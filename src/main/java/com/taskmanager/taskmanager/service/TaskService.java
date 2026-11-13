@@ -67,23 +67,20 @@ public Task createTask(Task task, User user) {
 
     return taskRepository.save(task);
 }
- public List<Task> getActiveTasks(Long userId) {
+ public List<Task> getTasks(Long userId) {
 
-        List<Task> tasks =
-                taskRepository.findByUser_IdAndStatusNot(
-                        userId,
-                        TaskStatus.DONE
-                );
+    List<Task> tasks =
+            taskRepository.findByUser_Id(userId);
 
-        return tasks.stream()
-                .sorted(
-                        prioritySortingStrategy.getComparator()
-                                .thenComparing(
-                                        dueDateSortingStrategy.getComparator()
-                                )
-                )
-                .toList();
-    }
+    return tasks.stream()
+            .sorted(
+                    prioritySortingStrategy.getComparator()
+                            .thenComparing(
+                                    dueDateSortingStrategy.getComparator()
+                            )
+            )
+            .toList();
+}
 public void changeTaskStatus(Long taskId, Long userId, TaskStatus status) {
 
     Task task = taskRepository.findById(taskId)
@@ -138,9 +135,9 @@ public Task getTaskById(Long taskId, Long userId) {
 public List<Task> getTasksByPriority(Long userId, Priority priority) {
 
     return taskRepository
-            .findByUser_IdAndStatusNotAndPriorityOrderByDueDateAsc(
+            .findByUser_IdAndPriorityOrderByDueDateAsc(
                     userId,
-                    TaskStatus.DONE,
+                    
                     priority
             );
 }
